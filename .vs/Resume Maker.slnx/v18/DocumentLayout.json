@@ -1,0 +1,79 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\filip\\OneDrive\\Desktop\\4 \u043A\u0443\u0440\u0441\\\u041F\u041F\u041F\u0406\\Resume Maker\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B29EDCE5-DECA-40D4-8945-508E0E9A3C10}|ResumeMaker.Infrastructure\\ResumeMaker.Infrastructure.csproj|c:\\users\\filip\\onedrive\\desktop\\4 \u043A\u0443\u0440\u0441\\\u043F\u043F\u043F\u0456\\resume maker\\resumemaker.infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B29EDCE5-DECA-40D4-8945-508E0E9A3C10}|ResumeMaker.Infrastructure\\ResumeMaker.Infrastructure.csproj|solutionrelative:resumemaker.infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37682456-C5E2-4F63-8643-4D552C3271CC}|ResumeMaker\\ResumeMaker.csproj|c:\\users\\filip\\onedrive\\desktop\\4 \u043A\u0443\u0440\u0441\\\u043F\u043F\u043F\u0456\\resume maker\\resumemaker\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37682456-C5E2-4F63-8643-4D552C3271CC}|ResumeMaker\\ResumeMaker.csproj|solutionrelative:resumemaker\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E85FF788-A9F0-4AA6-9CB5-D0AE944EF395}|ResumeMaker.Domain\\ResumeMaker.Domain.csproj|c:\\users\\filip\\onedrive\\desktop\\4 \u043A\u0443\u0440\u0441\\\u043F\u043F\u043F\u0456\\resume maker\\resumemaker.domain\\resumemaker.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E85FF788-A9F0-4AA6-9CB5-D0AE944EF395}|ResumeMaker.Domain\\ResumeMaker.Domain.csproj|solutionrelative:resumemaker.domain\\resumemaker.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 333,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\OneDrive\\Desktop\\4 \u043A\u0443\u0440\u0441\\\u041F\u041F\u041F\u0406\\Resume Maker\\ResumeMaker.Infrastructure\\Class1.cs",
+              "RelativeDocumentMoniker": "ResumeMaker.Infrastructure\\Class1.cs",
+              "ToolTip": "C:\\Users\\filip\\OneDrive\\Desktop\\4 \u043A\u0443\u0440\u0441\\\u041F\u041F\u041F\u0406\\Resume Maker\\ResumeMaker.Infrastructure\\Class1.cs",
+              "RelativeToolTip": "ResumeMaker.Infrastructure\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-23T21:31:47.158Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\filip\\OneDrive\\Desktop\\4 \u043A\u0443\u0440\u0441\\\u041F\u041F\u041F\u0406\\Resume Maker\\ResumeMaker\\Class1.cs",
+              "RelativeDocumentMoniker": "ResumeMaker\\Class1.cs",
+              "ToolTip": "C:\\Users\\filip\\OneDrive\\Desktop\\4 \u043A\u0443\u0440\u0441\\\u041F\u041F\u041F\u0406\\Resume Maker\\ResumeMaker\\Class1.cs",
+              "RelativeToolTip": "ResumeMaker\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-23T21:31:13.057Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ResumeMaker.Domain",
+              "DocumentMoniker": "C:\\Users\\filip\\OneDrive\\Desktop\\4 \u043A\u0443\u0440\u0441\\\u041F\u041F\u041F\u0406\\Resume Maker\\ResumeMaker.Domain\\ResumeMaker.Domain.csproj",
+              "RelativeDocumentMoniker": "ResumeMaker.Domain\\ResumeMaker.Domain.csproj",
+              "ToolTip": "C:\\Users\\filip\\OneDrive\\Desktop\\4 \u043A\u0443\u0440\u0441\\\u041F\u041F\u041F\u0406\\Resume Maker\\ResumeMaker.Domain\\ResumeMaker.Domain.csproj",
+              "RelativeToolTip": "ResumeMaker.Domain\\ResumeMaker.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-09-23T21:19:55.138Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Resume Maker/ResumeMaker.API.csproj" />
+  <Project Path="ResumeMaker.Domain/ResumeMaker.Domain.csproj" />
+  <Project Path="ResumeMaker.Infrastructure/ResumeMaker.Infrastructure.csproj" />
+  <Project Path="ResumeMaker/ResumeMaker.Application.csproj" />
+</Solution>
