@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "JOk4M3EqAQs=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\filip\\OneDrive\\Desktop\\4 курс\\ПППІ\\Resume Maker\\Resume Maker\\ResumeMaker.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\filip\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.12\\microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
+    "C:\\Users\\filip\\.nuget\\packages\\microsoft.openapi\\2.12.0\\microsoft.openapi.2.12.0.nupkg.sha512"
+  ],
+  "logs": []
+}
