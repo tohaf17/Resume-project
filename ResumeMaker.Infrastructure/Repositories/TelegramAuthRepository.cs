@@ -22,5 +22,10 @@ namespace ResumeMaker.Infrastructure.Repositories
         {
             await _context.SaveChangesAsync(token);
         }
+        public async Task<TelegramAuthRequest?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await _context.TelegramAuthRequests
+                .FindAsync([id], cancellationToken);
+        }
     }
 }

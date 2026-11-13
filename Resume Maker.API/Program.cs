@@ -6,6 +6,7 @@ using ResumeMaker.Infrastructure.Repositories;
 using ResumeMaker.Infrastructure.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;       
 using System.Threading.RateLimiting;
+using Telegram.Bot;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -41,12 +42,16 @@ builder.Services.AddRateLimiter(options =>
 builder.Services.Configure<TelegramBotOptions>(
     builder.Configuration.GetSection(TelegramBotOptions.SectionName));
 
-//TelegramBotWorker registration
-builder.Services.AddHostedService<TelegramBotWorker>();
-
-//TelegramAuthService and TelegramAuthRepository registration
+//TelegramWorker registration
+builder.Services.AddSingleton<ITelegramBotService, TelegramBotService>();
 builder.Services.AddScoped<ITelegramAuthRepository, TelegramAuthRepository>();
 builder.Services.AddScoped<ITelegramAuthService, TelegramAuthService>();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        JsonBotAPI.Configure(options.JsonSerializerOptions);
+    });
+
 
 builder.Services.AddControllers();
 var app = builder.Build();
