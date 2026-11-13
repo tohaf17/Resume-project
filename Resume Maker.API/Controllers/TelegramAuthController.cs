@@ -14,7 +14,7 @@ namespace Resume_Maker.Controllers
             _telegramAuthService = telegramAuthService;
         }
 
-        [HttpPost("telegram/init")]
+        [HttpPost("init")]
         [EnableRateLimiting("ip-limit")]
         public async Task<IActionResult> Init()
         {
@@ -23,6 +23,17 @@ namespace Resume_Maker.Controllers
             
                 return Ok(result);
             
+        }
+        [HttpGet("{requestId:guid}/status")]
+        public async Task<IActionResult> GetStatus(Guid requestId)
+        {
+            CancellationToken token = new CancellationToken();
+            var result = await _telegramAuthService.GetStatusAsync(requestId, token);
+            if (result is null)
+            {
+                return NotFound(new { message = "Заявку авторизації не знайдено." });
+            }
+            return Ok(result);
         }
     }
 }

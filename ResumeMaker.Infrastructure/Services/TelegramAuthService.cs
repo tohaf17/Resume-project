@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using ResumeMaker.Application.DTOs;
+using ResumeMaker.Application.DTOs.Responses;
 using ResumeMaker.Application.Interfaces.Repositories;
 using ResumeMaker.Application.Interfaces.Services;
 using ResumeMaker.Domain.Entities;
@@ -58,6 +58,23 @@ namespace ResumeMaker.Infrastructure.Services
             await _repository.SaveChangesAsync(token);
 
             return otpCode;
+        }
+
+        public async Task<TelegramAuthStatusResponse> GetStatusAsync(Guid requestId, CancellationToken token = default!)
+        {
+            var authRequest = await _repository.GetByIdAsync(requestId, token);
+
+            if (authRequest is null)
+            {
+                return new TelegramAuthStatusResponse("not_found");
+            }
+            if(authRequest.ExpiresAt>=DateTime.UtcNow)
+            {
+                authRequest.Status = StatusRequest.Expired;
+                await _repository.SaveChangesAsync(token);
+            }
+
+            return new TelegramAuthStatusResponse(authRequest.Status.ToString());
         }
 
     }

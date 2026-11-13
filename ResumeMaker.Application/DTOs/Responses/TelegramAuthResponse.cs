@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ResumeMaker.Application.DTOs
+namespace ResumeMaker.Application.DTOs.Responses
 {
     public record TelegramAuthResponse
     (
