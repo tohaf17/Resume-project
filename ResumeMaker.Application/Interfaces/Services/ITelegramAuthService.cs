@@ -8,6 +8,6 @@ namespace ResumeMaker.Application.Interfaces.Services
     public interface ITelegramAuthService
     {
         Task<TelegramAuthResponse> InitAsync(CancellationToken token=default!);
-        Task TelegramWebhookAsync(long chatId, string? text, CancellationToken token = default);
+        Task<string?> IssueCodeAsync(Guid requestId, long chatId, CancellationToken token = default);
     }
 }

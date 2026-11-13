@@ -3,8 +3,7 @@ using ResumeMaker.Application.Interfaces.Services;
 using ResumeMaker.Domain.Options;
 using ResumeMaker.Infrastructure;
 using ResumeMaker.Infrastructure.Repositories;
-using ResumeMaker.Infrastructure.Services;
-using Swashbuckle.AspNetCore.SwaggerGen;       
+using ResumeMaker.Infrastructure.Services;      
 using System.Threading.RateLimiting;
 using Telegram.Bot;
 
@@ -43,7 +42,7 @@ builder.Services.Configure<TelegramBotOptions>(
     builder.Configuration.GetSection(TelegramBotOptions.SectionName));
 
 //TelegramWorker registration
-builder.Services.AddSingleton<ITelegramBotService, TelegramBotService>();
+builder.Services.AddHostedService<TelegramBotWorker>();
 builder.Services.AddScoped<ITelegramAuthRepository, TelegramAuthRepository>();
 builder.Services.AddScoped<ITelegramAuthService, TelegramAuthService>();
 builder.Services.AddControllers()

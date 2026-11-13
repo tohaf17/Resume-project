@@ -9,6 +9,6 @@ namespace ResumeMaker.Application.Interfaces.Repositories
     {
         Task AddAsync(TelegramAuthRequest request,CancellationToken token=default!);
         Task SaveChangesAsync(CancellationToken token = default!);
-        Task<TelegramAuthRequest?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<TelegramAuthRequest?> GetByIdAsync(Guid id, CancellationToken token = default);
     }
 }
