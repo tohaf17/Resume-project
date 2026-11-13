@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("d7442d75-77ef-411f-a844-3d9cf825c2a5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ResumeMaker.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffcf0cee4ca31a153feef2e69e762eb9712e0cae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7d5f1b748201d8cfae59325a7139cda95b9c920")]
 [assembly: System.Reflection.AssemblyProductAttribute("ResumeMaker.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ResumeMaker.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -12,7 +12,7 @@ namespace ResumeMaker.Domain.Entities
         public long? TelegramChatId { get; set; }
         public string? CodeHash { get; set; }
         public int Attempts { get; set; } = 0;
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime ExpiresAt { get; set; } = DateTime.UtcNow.AddMinutes(5);
 
         

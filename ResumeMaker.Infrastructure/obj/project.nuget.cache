@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tfDsGGsddFc=",
+  "dgSpecHash": "GQFqcoQ7JLU=",
   "success": true,
   "projectFilePath": "C:\\Users\\filip\\OneDrive\\Desktop\\4 курс\\ПППІ\\Resume Maker\\ResumeMaker.Infrastructure\\ResumeMaker.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -31,6 +31,9 @@
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.15\\microsoft.extensions.dependencyinjection.10.0.15.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.15\\microsoft.extensions.dependencyinjection.abstractions.10.0.15.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.15\\microsoft.extensions.dependencymodel.10.0.15.nupkg.sha512",
+    "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.15\\microsoft.extensions.diagnostics.abstractions.10.0.15.nupkg.sha512",
+    "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.15\\microsoft.extensions.fileproviders.abstractions.10.0.15.nupkg.sha512",
+    "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\10.0.15\\microsoft.extensions.hosting.abstractions.10.0.15.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.logging\\10.0.15\\microsoft.extensions.logging.10.0.15.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.15\\microsoft.extensions.logging.abstractions.10.0.15.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.extensions.options\\10.0.15\\microsoft.extensions.options.10.0.15.nupkg.sha512",
@@ -62,7 +65,8 @@
     "C:\\Users\\filip\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.7.1\\system.identitymodel.tokens.jwt.7.7.1.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\system.security.cryptography.pkcs\\10.0.13\\system.security.cryptography.pkcs.10.0.13.nupkg.sha512",
-    "C:\\Users\\filip\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.11\\system.security.cryptography.protecteddata.9.0.11.nupkg.sha512"
+    "C:\\Users\\filip\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.11\\system.security.cryptography.protecteddata.9.0.11.nupkg.sha512",
+    "C:\\Users\\filip\\.nuget\\packages\\telegram.bot\\22.10.4\\telegram.bot.22.10.4.nupkg.sha512"
   ],
   "logs": []
 }

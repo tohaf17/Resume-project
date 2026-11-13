@@ -1,13 +1,17 @@
+using ResumeMaker.Application.Interfaces.Repositories;
+using ResumeMaker.Application.Interfaces.Services;
+using ResumeMaker.Domain.Options;
 using ResumeMaker.Infrastructure;
+using ResumeMaker.Infrastructure.Repositories;
+using ResumeMaker.Infrastructure.Services;
+using Swashbuckle.AspNetCore.SwaggerGen;       
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 //конфігурація підключення до бази даних
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -33,15 +37,26 @@ builder.Services.AddRateLimiter(options =>
             });
     });
 });
+//конфігурація TelegramBotOptions
+builder.Services.Configure<TelegramBotOptions>(
+    builder.Configuration.GetSection(TelegramBotOptions.SectionName));
 
+//TelegramBotWorker registration
+builder.Services.AddHostedService<TelegramBotWorker>();
+
+//TelegramAuthService and TelegramAuthRepository registration
+builder.Services.AddScoped<ITelegramAuthRepository, TelegramAuthRepository>();
+builder.Services.AddScoped<ITelegramAuthService, TelegramAuthService>();
 
 builder.Services.AddControllers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(); // Доступно за адресою /swagger
 }
 
 app.UseHttpsRedirection();

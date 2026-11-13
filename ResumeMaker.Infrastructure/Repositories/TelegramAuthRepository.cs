@@ -1,10 +1,26 @@
-﻿using System;
+﻿using ResumeMaker.Application.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using ResumeMaker.Domain.Entities;
+using ResumeMaker.Infrastructure.Persistence;
 
 namespace ResumeMaker.Infrastructure.Repositories
 {
-    internal class TelegramAuthRepository
+    public class TelegramAuthRepository:ITelegramAuthRepository
     {
+        private readonly AppDbContext _context;
+        public TelegramAuthRepository(AppDbContext context)
+        {
+            _context = context;
+        }
+        public async Task AddAsync(TelegramAuthRequest request, CancellationToken token = default!)
+        {
+            await _context.TelegramAuthRequests.AddAsync(request, token);
+        }
+        public async Task SaveChangesAsync(CancellationToken token = default!)
+        {
+            await _context.SaveChangesAsync(token);
+        }
     }
 }

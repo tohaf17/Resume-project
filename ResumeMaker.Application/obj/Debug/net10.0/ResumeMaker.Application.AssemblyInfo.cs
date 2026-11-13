@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ResumeMaker.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffcf0cee4ca31a153feef2e69e762eb9712e0cae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+399893f873810174aa8df8aab6491114aea9a36b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ResumeMaker.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ResumeMaker.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

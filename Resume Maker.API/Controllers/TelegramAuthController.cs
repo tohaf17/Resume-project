@@ -16,18 +16,13 @@ namespace Resume_Maker.Controllers
 
         [HttpPost("telegram/init")]
         [EnableRateLimiting("ip-limit")]
-        public IActionResult Init(string code)
+        public async Task<IActionResult> Init()
         {
-            throw new NotImplementedException("This endpoint is not implemented yet.");
-            //var result = _telegramAuthService.Init(code);
-            //if (result.IsSuccess)
-            //{
-            //    return Ok(result);
-            //}
-            //else
-            //{
-            //    return BadRequest(result);
-            //}
+            CancellationToken token = new CancellationToken();
+            var result = await _telegramAuthService.InitAsync(token);
+            
+                return Ok(result);
+            
         }
     }
 }

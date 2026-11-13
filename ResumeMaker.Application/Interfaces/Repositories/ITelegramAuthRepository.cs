@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ResumeMaker.Domain.Entities;
 
 namespace ResumeMaker.Application.Interfaces.Repositories
 {
-    internal class ITelegramAuthRepository
+    public interface ITelegramAuthRepository
     {
+        Task AddAsync(TelegramAuthRequest request,CancellationToken token=default!);
+        Task SaveChangesAsync(CancellationToken token = default!);
     }
 }
