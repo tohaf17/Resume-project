@@ -52,6 +52,7 @@ public class TelegramBotWorker : BackgroundService
             return;
 
         var chatId = update.Message.Chat.Id;
+        var telegramUsername = update.Message.Chat.Username;
 
         if (!text.StartsWith("/start ", StringComparison.OrdinalIgnoreCase))
         {
@@ -72,7 +73,7 @@ public class TelegramBotWorker : BackgroundService
         using var scope = _scopeFactory.CreateScope();
         var authService = scope.ServiceProvider.GetRequiredService<ITelegramAuthService>();
 
-        var otpCode = await authService.IssueCodeAsync(requestId, chatId, ct);
+        var otpCode = await authService.IssueCodeAsync(requestId, telegramUsername, chatId, ct);
 
         if (otpCode is null)
         {

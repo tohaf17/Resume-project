@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using ResumeMaker.Application.Interfaces.Repositories;
 using ResumeMaker.Application.Interfaces.Services;
 using ResumeMaker.Domain.Options;
 using ResumeMaker.Infrastructure;
 using ResumeMaker.Infrastructure.Repositories;
 using ResumeMaker.Infrastructure.Services;      
+using System.Text;
 using System.Threading.RateLimiting;
 using Telegram.Bot;
 
@@ -16,6 +19,36 @@ builder.Services.AddSwaggerGen();
 //конфігурація підключення до бази даних
 builder.Services.AddInfrastructure(builder.Configuration);
 
+//
+builder.Services.Configure<JwtOptions>(
+    builder.Configuration.GetSection(JwtOptions.SectionName));
+
+var jwt = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
+          ?? throw new InvalidOperationException("Jwt section is missing");
+
+if (string.IsNullOrWhiteSpace(jwt.Key) || jwt.Key.Length < 32)
+    throw new InvalidOperationException(
+        "Jwt:Key is not set. Run: dotnet user-secrets set \"Jwt:Key\" \"<key>\"");
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwt.Issuer,
+            ValidateAudience = true,
+            ValidAudience = jwt.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key)),
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromMinutes(1)
+        };
+    });
+
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
 //конфігурація Rate Limiter
 builder.Services.AddRateLimiter(options =>
 {
@@ -53,6 +86,8 @@ builder.Services.AddControllers()
 
 
 builder.Services.AddControllers();
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,7 +99,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

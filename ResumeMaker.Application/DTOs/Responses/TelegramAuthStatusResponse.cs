@@ -4,5 +4,5 @@ using System.Text;
 
 namespace ResumeMaker.Application.DTOs.Responses
 {
-    public record TelegramAuthStatusResponse(string status);
+    public record TelegramAuthStatusResponse(string Status);
 }

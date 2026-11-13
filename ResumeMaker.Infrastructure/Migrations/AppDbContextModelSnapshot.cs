@@ -79,6 +79,9 @@ namespace ResumeMaker.Infrastructure.Migrations
                     b.Property<long?>("TelegramChatId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("TelegramUsername")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ExpiresAt");

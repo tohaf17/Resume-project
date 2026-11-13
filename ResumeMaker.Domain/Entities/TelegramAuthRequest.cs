@@ -10,6 +10,7 @@ namespace ResumeMaker.Domain.Entities
         public Guid Id { get; set; }
         public StatusRequest Status { get; set; }
         public long? TelegramChatId { get; set; }
+        public string? TelegramUsername { get; set; }
         public string? CodeHash { get; set; }
         public int Attempts { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
