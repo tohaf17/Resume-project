@@ -12,5 +12,7 @@ namespace ResumeMaker.Application.Interfaces.Repositories
         Task AddRefreshTokenAsync(RefreshToken refreshToken, CancellationToken token = default);
         Task<RefreshToken?> GetRefreshTokenByHashAsync(string tokenHash, CancellationToken token = default);
         Task SaveChangesAsync(CancellationToken token = default);
+        Task<User?> GetUserByEmailAsync(string email, CancellationToken token = default);
+
     }
 }

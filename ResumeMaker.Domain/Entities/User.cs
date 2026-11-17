@@ -9,9 +9,10 @@ namespace ResumeMaker.Domain.Entities
     public class User
     {
         public Guid Id { get; set; }
-        public required long TelegramUserId { get; set; }
+        public long? TelegramUserId { get; set; }
         public string? TelegramUsername { get; set; }
-        
+        public string? Email { get; set; }
+        public string? PasswordHash { get; set; }
         public string? PhoneNumber { get; set; }
         public UserRole Role { get; set; }
         public Guid? TariffPlanId { get; set; }

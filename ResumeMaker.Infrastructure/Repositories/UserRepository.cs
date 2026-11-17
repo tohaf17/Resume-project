@@ -37,5 +37,13 @@ namespace ResumeMaker.Infrastructure.Repositories
         {
             await _dbContext.SaveChangesAsync(token);
         }
+        public async Task<User?> GetUserByEmailAsync(string email, CancellationToken token = default)
+        {
+            var normalizedEmail = email.Trim().ToLowerInvariant();
+            return await _dbContext.Users
+                .AsQueryable()
+                .FirstOrDefaultAsync(u => u.Email != null && u.Email.ToLower() == normalizedEmail, token);
+        }
     }
+
 }

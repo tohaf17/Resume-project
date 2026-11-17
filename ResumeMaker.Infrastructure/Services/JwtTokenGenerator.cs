@@ -29,12 +29,20 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Role, user.Role.ToString()),
-            new("telegram_id", user.TelegramUserId.ToString())
+            new(ClaimTypes.Role, user.Role.ToString())
         };
+
+        if (user.TelegramUserId.HasValue)
+            claims.Add(new Claim("telegram_id", user.TelegramUserId.Value.ToString()));
 
         if (!string.IsNullOrWhiteSpace(user.TelegramUsername))
             claims.Add(new Claim("telegram_username", user.TelegramUsername));
+
+        if (!string.IsNullOrWhiteSpace(user.Email))
+        {
+            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
+            claims.Add(new Claim(ClaimTypes.Email, user.Email));
+        }
 
         var token = new JwtSecurityToken(
             issuer: _jwtOptions.Issuer,

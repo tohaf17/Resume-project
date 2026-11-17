@@ -212,5 +212,21 @@ namespace ResumeMaker.Infrastructure.Services
             return (new RefreshTokenResponse(newAccessToken, newRawRefreshToken), null);
         }
 
+        public async Task<bool> LogoutAsync(Guid userId, string refreshToken, CancellationToken token = default)
+        {
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                return false;
+
+            var tokenHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken.Trim())));
+            var existingToken = await _userRepository.GetRefreshTokenByHashAsync(tokenHash, token);
+
+            if (existingToken is null || existingToken.UserId != userId || existingToken.RevokedAt is not null)
+                return false;
+
+            existingToken.RevokedAt = DateTime.UtcNow;
+            await _userRepository.SaveChangesAsync(token);
+
+            return true;
+        }
     }
 }

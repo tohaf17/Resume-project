@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using ResumeMaker.Application.Interfaces.Services;
 using ResumeMaker.Application.DTOs.Request;
@@ -54,5 +57,21 @@ namespace Resume_Maker.Controllers
 
             return Ok(response);
         }
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody] LogoutRequest request, CancellationToken token = default!)
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!Guid.TryParse(userIdClaim, out var userId))
+                return Unauthorized();
+
+            var success = await _telegramAuthService.LogoutAsync(userId, request.RefreshToken, token);
+            if (!success) 
+            { 
+                return BadRequest(new { message = "Недійсний або вже відкликаний refresh token." });
+            }
+            return Ok(new { message = "Вихід виконано успішно." });
+        }
+
     }
 }

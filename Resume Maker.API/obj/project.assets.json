@@ -850,7 +850,7 @@
           }
         }
       },
-      "Microsoft.OpenApi/2.12.0": {
+      "Microsoft.OpenApi/3.11.1": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.OpenApi.dll": {
@@ -1240,6 +1240,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "BCrypt.Net-Next": "4.2.0",
           "Microsoft.EntityFrameworkCore": "10.0.15",
           "Microsoft.EntityFrameworkCore.SqlServer": "10.0.15",
           "ResumeMaker.Application": "1.0.0",
@@ -2959,10 +2960,10 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Microsoft.OpenApi/2.12.0": {
-      "sha512": "0xB/be+f6qYOhvQPUrVsLrau+fkowYv6gt9RIkajMhwT7sZnqtcA797yW3bS5kgSje+AQW4xZgyLnW641YFioQ==",
+    "Microsoft.OpenApi/3.11.1": {
+      "sha512": "WZL9g2+9NPICW4Es6zjIBj4mmKxAnI8RCru3gAZUliCMZPnuaxRynXq4cXoU+IYvI7kXY4ydSrrJ1R9EEHr+Lw==",
       "type": "package",
-      "path": "microsoft.openapi/2.12.0",
+      "path": "microsoft.openapi/3.11.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2973,7 +2974,7 @@
         "lib/netstandard2.0/Microsoft.OpenApi.dll",
         "lib/netstandard2.0/Microsoft.OpenApi.pdb",
         "lib/netstandard2.0/Microsoft.OpenApi.xml",
-        "microsoft.openapi.2.12.0.nupkg.sha512",
+        "microsoft.openapi.3.11.1.nupkg.sha512",
         "microsoft.openapi.nuspec"
       ]
     },
@@ -3526,6 +3527,7 @@
       "Microsoft.AspNetCore.OpenApi >= 10.0.12",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.15",
       "Microsoft.IdentityModel.Tokens >= 8.23.0",
+      "Microsoft.OpenApi >= 3.11.1",
       "ResumeMaker.Application >= 1.0.0",
       "ResumeMaker.Infrastructure >= 1.0.0",
       "Swashbuckle.AspNetCore.Swagger >= 10.3.1",
@@ -3613,6 +3615,10 @@
           "Microsoft.IdentityModel.Tokens": {
             "target": "Package",
             "version": "[8.23.0, )"
+          },
+          "Microsoft.OpenApi": {
+            "target": "Package",
+            "version": "[3.11.1, )"
           },
           "Swashbuckle.AspNetCore.Swagger": {
             "target": "Package",
@@ -4063,5 +4069,26 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: Microsoft.AspNetCore.OpenApi 10.0.12 requires Microsoft.OpenApi (>= 2.12.0 && < 3.0.0) but version Microsoft.OpenApi 3.11.1 was resolved.",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: BCrypt.Net-Next from 4.2.0 to 3.5.0. Reference the package directly from the project to select a different version. \r\n ResumeMaker.API -> ResumeMaker.Infrastructure -> BCrypt.Net-Next (>= 4.2.0) \r\n ResumeMaker.API -> BCrypt.Net-Next (>= 3.5.0)",
+      "libraryId": "BCrypt.Net-Next",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

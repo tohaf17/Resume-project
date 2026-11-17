@@ -35,5 +35,12 @@ namespace ResumeMaker.Infrastructure.Repositories
                 .AsQueryable()
                 .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, token);
         }
+        public async Task<User?> GetUserByEmailAsync(string email, CancellationToken token = default)
+        {
+            var normalizedEmail = email.Trim().ToLowerInvariant();
+            return await _context.Users
+                .AsQueryable()
+                .FirstOrDefaultAsync(u => u.Email != null && u.Email.ToLower() == normalizedEmail, token);
+        }
     }
 }

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ResumeMaker.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a54a2c5197d1580e9133917ff3890cae796d771")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8af68d86d4f3b9cab1761d0ddc5244674555112")]
 [assembly: System.Reflection.AssemblyProductAttribute("ResumeMaker.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ResumeMaker.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
