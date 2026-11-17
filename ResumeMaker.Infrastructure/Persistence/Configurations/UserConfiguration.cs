@@ -16,7 +16,7 @@ namespace ResumeMaker.Infrastructure.Persistence.Configurations
             builder.HasKey(u => u.Id);
 
             builder.Property(u => u.TelegramUserId)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.HasIndex(u => u.TelegramUserId)
                 .IsUnique();
@@ -39,6 +39,18 @@ namespace ResumeMaker.Infrastructure.Persistence.Configurations
 
             builder.Property(u => u.CreatedAt)
                 .IsRequired();
+
+            builder.Property(u => u.Email)
+                .HasMaxLength(256)
+                .IsRequired(false);
+
+            builder.HasIndex(u => u.Email)
+                .IsUnique()
+                .HasFilter("[Email] IS NOT NULL");
+
+            builder.Property(u => u.PasswordHash)
+                .HasMaxLength(256)
+                .IsRequired(false);
 
             builder.HasMany(u => u.RefreshTokens)
                 .WithOne(rt => rt.User)

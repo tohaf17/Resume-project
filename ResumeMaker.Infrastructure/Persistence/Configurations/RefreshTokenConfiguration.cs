@@ -28,6 +28,9 @@ namespace ResumeMaker.Infrastructure.Persistence.Configurations
             builder.Property(rt => rt.ExpiresAt)
                 .IsRequired();
 
+            builder.Property(rt => rt.CreatedAt)
+                .IsRequired();
+
             builder.Property(rt => rt.RevokedAt)
                 .IsRequired(false);
 

@@ -28,19 +28,5 @@ namespace ResumeMaker.Infrastructure.Repositories
         {
             return await _context.TelegramAuthRequests.FindAsync([id], token);
         }
-        public async Task<RefreshToken?> GetRefreshTokenByHashAsync(string tokenHash, CancellationToken token = default)
-        {
-            return await _context.RefreshTokens
-                .Include(rt => rt.User)
-                .AsQueryable()
-                .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, token);
-        }
-        public async Task<User?> GetUserByEmailAsync(string email, CancellationToken token = default)
-        {
-            var normalizedEmail = email.Trim().ToLowerInvariant();
-            return await _context.Users
-                .AsQueryable()
-                .FirstOrDefaultAsync(u => u.Email != null && u.Email.ToLower() == normalizedEmail, token);
-        }
     }
 }

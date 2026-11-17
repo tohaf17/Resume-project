@@ -28,6 +28,9 @@ namespace ResumeMaker.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
 
@@ -80,7 +83,8 @@ namespace ResumeMaker.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("TelegramUsername")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -95,8 +99,16 @@ namespace ResumeMaker.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PasswordHash")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(20)
@@ -110,7 +122,7 @@ namespace ResumeMaker.Infrastructure.Migrations
                     b.Property<Guid?>("TariffPlanId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("TelegramUserId")
+                    b.Property<long?>("TelegramUserId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("TelegramUsername")
@@ -121,6 +133,11 @@ namespace ResumeMaker.Infrastructure.Migrations
 
                     b.HasIndex("TelegramUserId")
                         .IsUnique();
+
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
                 });

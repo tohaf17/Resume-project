@@ -23,6 +23,10 @@ namespace ResumeMaker.Infrastructure.Persistence.Configurations
             builder.Property(r => r.TelegramChatId)
                 .IsRequired(false);
 
+            builder.Property(r => r.TelegramUsername)
+                .HasMaxLength(64)
+                .IsRequired(false);
+
             builder.Property(r => r.CodeHash)
                 .HasMaxLength(256)
                 .IsRequired(false);

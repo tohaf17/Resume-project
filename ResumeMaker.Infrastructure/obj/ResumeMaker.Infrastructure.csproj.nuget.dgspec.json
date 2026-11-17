@@ -747,7 +747,7 @@
           "dependencies": {
             "BCrypt.Net-Next": {
               "target": "Package",
-              "version": "[4.2.0, )"
+              "version": "[3.5.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

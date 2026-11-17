@@ -33,6 +33,24 @@ namespace ResumeMaker.Infrastructure.Repositories
             await _dbContext.RefreshTokens.AddAsync(refreshToken, token);
         }
 
+        public async Task<RefreshToken?> GetRefreshTokenByHashAsync(string tokenHash, CancellationToken token = default)
+        {
+            return await _dbContext.RefreshTokens
+                .Include(rt => rt.User)
+                .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, token);
+        }
+
+        public async Task<bool> TryRevokeRefreshTokenAsync(string tokenHash, DateTime revokedAt, CancellationToken token = default)
+        {
+            var affected = await _dbContext.RefreshTokens
+                .Where(rt => rt.TokenHash == tokenHash && rt.RevokedAt == null)
+                .ExecuteUpdateAsync(
+                    updates => updates.SetProperty(rt => rt.RevokedAt, revokedAt),
+                    token);
+
+            return affected == 1;
+        }
+
         public async Task SaveChangesAsync(CancellationToken token = default)
         {
             await _dbContext.SaveChangesAsync(token);

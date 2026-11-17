@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ResumeMaker.Application.Interfaces;
 using ResumeMaker.Application.Interfaces.Services;
-using ResumeMaker.Domain.Options;
+using ResumeMaker.Application.Options;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -52,7 +52,7 @@ public class TelegramBotWorker : BackgroundService
             return;
 
         var chatId = update.Message.Chat.Id;
-        var telegramUsername = update.Message.Chat.Username;
+        var telegramUsername = update.Message.From?.Username;
 
         if (!text.StartsWith("/start ", StringComparison.OrdinalIgnoreCase))
         {

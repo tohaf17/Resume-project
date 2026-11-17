@@ -42,9 +42,7 @@ namespace Resume_Maker.Controllers
         {
             var (response, error) = await _telegramAuthService.VerifyAuthAsync(request, token);
             if (error != null)
-            {
-                return NotFound(new { message = error });
-            }
+                return BadRequest(new { message = error });
             return Ok(response);
         }
 

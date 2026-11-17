@@ -4,5 +4,5 @@ using System.Text;
 
 namespace ResumeMaker.Application.DTOs.Request
 {
-    public record LogoutRequest(string RefreshToken);
+    public record LogoutRequest(string? RefreshToken);
 }

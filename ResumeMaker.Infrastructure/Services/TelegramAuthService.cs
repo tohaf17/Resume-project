@@ -7,7 +7,7 @@ using ResumeMaker.Application.Interfaces.Repositories;
 using ResumeMaker.Application.Interfaces.Services;
 using ResumeMaker.Domain.Entities;
 using ResumeMaker.Domain.Enums;
-using ResumeMaker.Domain.Options;
+using ResumeMaker.Application.Options;
 using ResumeMaker.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace ResumeMaker.Infrastructure.Services
                 TelegramDeepLink: deepLink,
                 ExpiresInSeconds: expiresInSeconds);
         }
-        public async Task<string?> IssueCodeAsync(Guid requestId,string telegramUsername, long chatId, CancellationToken token = default)
+        public async Task<string?> IssueCodeAsync(Guid requestId, string? telegramUsername, long chatId, CancellationToken token = default)
         {
             var authRequest = await _telegramRepository.GetByIdAsync(requestId, token);
 
@@ -55,7 +55,8 @@ namespace ResumeMaker.Infrastructure.Services
             }
 
             var otpCode = RandomNumberGenerator.GetInt32(100000, 1000000).ToString();
-            var codeHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(otpCode)));
+            var salt = RandomNumberGenerator.GetBytes(16);
+            var codeHash = CreateOtpHash(otpCode, salt);
 
             authRequest.TelegramChatId = chatId;
             authRequest.TelegramUsername = telegramUsername;
@@ -67,15 +68,16 @@ namespace ResumeMaker.Infrastructure.Services
             return otpCode;
         }
 
-        public async Task<TelegramAuthStatusResponse> GetStatusAsync(Guid requestId, CancellationToken token = default!)
+        public async Task<TelegramAuthStatusResponse?> GetStatusAsync(Guid requestId, CancellationToken token = default)
         {
             var authRequest = await _telegramRepository.GetByIdAsync(requestId, token);
 
             if (authRequest is null)
             {
-                return new TelegramAuthStatusResponse("not_found");
+                return null;
             }
-            if(authRequest.ExpiresAt>=DateTime.UtcNow)
+            if (authRequest.ExpiresAt <= DateTime.UtcNow &&
+                authRequest.Status is StatusRequest.Pending or StatusRequest.CodeIssued)
             {
                 authRequest.Status = StatusRequest.Expired;
                 await _telegramRepository.SaveChangesAsync(token);
@@ -103,11 +105,11 @@ namespace ResumeMaker.Infrastructure.Services
                 return (null, "Термін дії коду вийшов.");
             }
 
-            var inputHashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(request.Code.Trim()));
-            var storedHashBytes = Convert.FromHexString(authRequest.CodeHash ?? string.Empty);
+            if (string.IsNullOrWhiteSpace(request.Code) || request.Code.Length != 6 ||
+                !request.Code.All(char.IsDigit))
+                return (null, "Код має містити рівно 6 цифр.");
 
-            var isCodeValid = storedHashBytes.Length == inputHashBytes.Length &&
-                              CryptographicOperations.FixedTimeEquals(inputHashBytes, storedHashBytes);
+            var isCodeValid = VerifyOtpHash(request.Code, authRequest.CodeHash);
 
             if (!isCodeValid)
             {
@@ -127,7 +129,10 @@ namespace ResumeMaker.Infrastructure.Services
 
             authRequest.Status = StatusRequest.Confirmed;
 
-            var telegramUserId = authRequest.TelegramChatId!.Value;
+            if (authRequest.TelegramChatId is null)
+                return (null, "Telegram-користувача для заявки не знайдено.");
+
+            var telegramUserId = authRequest.TelegramChatId.Value;
             var user = await _userRepository.GetUserByTelegramIdAsync(telegramUserId, token);
             var isNewUser = false;
 
@@ -192,7 +197,11 @@ namespace ResumeMaker.Infrastructure.Services
                 return (null, "Недійсний або прострочений refresh token.");
             }
 
-            existingToken.RevokedAt = DateTime.UtcNow;
+            if (existingToken.User is null)
+                return (null, "Користувача для refresh token не знайдено.");
+
+            if (!await _userRepository.TryRevokeRefreshTokenAsync(tokenHash, DateTime.UtcNow, token))
+                return (null, "Недійсний або вже відкликаний refresh token.");
 
             var newAccessToken = _jwtGenerator.GenerateAccessToken(existingToken.User);
             var (newRawRefreshToken, newRefreshTokenHash, newRefreshExpiresAt) = _jwtGenerator.GenerateRefreshToken();
@@ -212,7 +221,7 @@ namespace ResumeMaker.Infrastructure.Services
             return (new RefreshTokenResponse(newAccessToken, newRawRefreshToken), null);
         }
 
-        public async Task<bool> LogoutAsync(Guid userId, string refreshToken, CancellationToken token = default)
+        public async Task<bool> LogoutAsync(Guid userId, string? refreshToken, CancellationToken token = default)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
                 return false;
@@ -223,10 +232,36 @@ namespace ResumeMaker.Infrastructure.Services
             if (existingToken is null || existingToken.UserId != userId || existingToken.RevokedAt is not null)
                 return false;
 
-            existingToken.RevokedAt = DateTime.UtcNow;
-            await _userRepository.SaveChangesAsync(token);
+            return await _userRepository.TryRevokeRefreshTokenAsync(tokenHash, DateTime.UtcNow, token);
+        }
 
-            return true;
+        private static string CreateOtpHash(string code, byte[] salt)
+        {
+            var input = salt.Concat(Encoding.UTF8.GetBytes(code)).ToArray();
+            var hash = SHA256.HashData(input);
+            return $"{Convert.ToHexString(salt)}:{Convert.ToHexString(hash)}";
+        }
+
+        private static bool VerifyOtpHash(string code, string? storedValue)
+        {
+            if (string.IsNullOrWhiteSpace(storedValue))
+                return false;
+
+            var parts = storedValue.Split(':', 2);
+            if (parts.Length != 2)
+                return false;
+
+            try
+            {
+                var salt = Convert.FromHexString(parts[0]);
+                var expectedHash = Convert.FromHexString(parts[1]);
+                var actualHash = SHA256.HashData(salt.Concat(Encoding.UTF8.GetBytes(code)).ToArray());
+                return CryptographicOperations.FixedTimeEquals(actualHash, expectedHash);
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ResumeMaker.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8af68d86d4f3b9cab1761d0ddc5244674555112")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a76f5c4df544d0d612af45ac4309910d2db1c99d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ResumeMaker.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ResumeMaker.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

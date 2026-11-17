@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using ResumeMaker.Application.Interfaces.Services;
+using ResumeMaker.Application.Interfaces.Repositories;
 using ResumeMaker.Infrastructure.Persistence;
+using ResumeMaker.Infrastructure.Repositories;
 using ResumeMaker.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,12 @@ namespace ResumeMaker.Infrastructure
                 options.UseSqlServer(connectionString));
 
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITelegramAuthRepository, TelegramAuthRepository>();
             services.AddScoped<IAdminAuthService, AdminAuthService>();
+            services.AddScoped<ITelegramAuthService, TelegramAuthService>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddHostedService<TelegramBotWorker>();
             return services;
         }
     }

@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ResumeMaker.Application.Interfaces;
 using ResumeMaker.Application.Interfaces.Services;
+using ResumeMaker.Application.Options;
 using ResumeMaker.Domain.Entities;
-using ResumeMaker.Domain.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;

@@ -1,43 +1,17 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
-using Microsoft.OpenApi;
 using ResumeMaker.Domain.Entities;
-using ResumeMaker.Application.Interfaces.Repositories;
 using ResumeMaker.Application.Interfaces.Services;
 using ResumeMaker.Domain.Enums;
-using ResumeMaker.Domain.Options;
+using ResumeMaker.Application.Options;
 using ResumeMaker.Infrastructure;
 using ResumeMaker.Infrastructure.Persistence;
-using ResumeMaker.Infrastructure.Repositories;
-using ResumeMaker.Infrastructure.Services;      
 using System.Text;
 using System.Threading.RateLimiting;
-using Telegram.Bot;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
-builder.Services.AddEndpointsApiExplorer();
-//swagger configuration with JWT Bearer authentication
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Введіть ваш JWT Access Token"
-    });
-
-    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
-    {
-        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
-    });
-});
 //конфігурація підключення до бази даних
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -51,7 +25,6 @@ var jwt = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOption
 if (string.IsNullOrWhiteSpace(jwt.Key) || jwt.Key.Length < 32)
     throw new InvalidOperationException(
         "Jwt:Key is not set. Run: dotnet user-secrets set \"Jwt:Key\" \"<key>\"");
-builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -70,7 +43,6 @@ builder.Services
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddControllers();
 //конфігурація Rate Limiter
 builder.Services.AddRateLimiter(options =>
 {
@@ -96,20 +68,6 @@ builder.Services.AddRateLimiter(options =>
 builder.Services.Configure<TelegramBotOptions>(
     builder.Configuration.GetSection(TelegramBotOptions.SectionName));
 
-//TelegramWorker registration
-builder.Services.AddHostedService<TelegramBotWorker>();
-builder.Services.AddScoped<ITelegramAuthRepository, TelegramAuthRepository>();
-builder.Services.AddScoped<ITelegramAuthService, TelegramAuthService>();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        JsonBotAPI.Configure(options.JsonSerializerOptions);
-    });
-
-
-builder.Services.AddControllers();
-builder.Services.AddAuthorization();
-builder.Services.AddControllers();
 var app = builder.Build();
 
 
@@ -118,14 +76,17 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
 
-    const string adminEmail = "admin@resumebuilder.app";
-    if (!await dbContext.Users.AnyAsync(u => u.Email == adminEmail))
+    var adminEmail = builder.Configuration["AdminBootstrap:Email"];
+    var adminPassword = builder.Configuration["AdminBootstrap:Password"];
+    if (!string.IsNullOrWhiteSpace(adminEmail) &&
+        !string.IsNullOrWhiteSpace(adminPassword) &&
+        !await dbContext.Users.AnyAsync(u => u.Email == adminEmail))
     {
         dbContext.Users.Add(new User
         {
             Id = Guid.NewGuid(),
             Email = adminEmail,
-            PasswordHash = passwordHasher.HashPassword("Admin123!"),
+            PasswordHash = passwordHasher.HashPassword(adminPassword),
             Role = UserRole.Admin,
             CreatedAt = DateTime.UtcNow
         });
@@ -136,13 +97,8 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(); // Доступно за адресою /swagger
-}
-
 app.UseHttpsRedirection();
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 

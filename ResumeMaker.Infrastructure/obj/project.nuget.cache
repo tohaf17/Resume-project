@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "lyh/yl0mD7I=",
+  "dgSpecHash": "u6h42sAZUOA=",
   "success": true,
   "projectFilePath": "C:\\Users\\filip\\OneDrive\\Desktop\\4 курс\\ПППІ\\Resume Maker\\ResumeMaker.Infrastructure\\ResumeMaker.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\filip\\.nuget\\packages\\azure.core\\1.50.0\\azure.core.1.50.0.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\azure.identity\\1.17.1\\azure.identity.1.17.1.nupkg.sha512",
-    "C:\\Users\\filip\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
+    "C:\\Users\\filip\\.nuget\\packages\\bcrypt.net-next\\3.5.0\\bcrypt.net-next.3.5.0.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.bcl.cryptography\\10.0.2\\microsoft.bcl.cryptography.10.0.2.nupkg.sha512",
