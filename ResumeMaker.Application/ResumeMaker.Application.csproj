@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Validators\" />
+    <Folder Include="Options\" />
+    <Compile Update="Options\JwtOptions.cs" Visible="true" />
+    <Compile Update="Options\TelegramBotOptions.cs" Visible="true" />
   </ItemGroup>
 
   <ItemGroup>
