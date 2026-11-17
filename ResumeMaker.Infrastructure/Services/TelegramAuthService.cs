@@ -84,7 +84,7 @@ namespace ResumeMaker.Infrastructure.Services
             return new TelegramAuthStatusResponse(authRequest.Status.ToString());
         }
 
-        public async Task<(VerifyTelegramAuthResponse? Response, string? Error)> VerifyAsync(
+        public async Task<(VerifyTelegramAuthResponse? response, string? error)> VerifyAuthAsync(
     VerifyTelegramAuthRequest request,
     CancellationToken token = default)
         {
@@ -172,6 +172,44 @@ namespace ResumeMaker.Infrastructure.Services
                 User: new UserDto(user.Id, user.TelegramUsername, user.Role.ToString()));
 
             return (response, null);
+        }
+
+        public async Task<(RefreshTokenResponse? Response, string? Error)> RefreshTokenAsync(
+    RefreshTokenRequest request,
+    CancellationToken token = default)
+        {
+            if (string.IsNullOrWhiteSpace(request.RefreshToken))
+                return (null, "Refresh token не може бути порожнім.");
+
+            var tokenHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(request.RefreshToken.Trim())));
+
+            var existingToken = await _userRepository.GetRefreshTokenByHashAsync(tokenHash, token);
+
+            if (existingToken is null ||
+                existingToken.ExpiresAt <= DateTime.UtcNow ||
+                existingToken.RevokedAt is not null)
+            {
+                return (null, "Недійсний або прострочений refresh token.");
+            }
+
+            existingToken.RevokedAt = DateTime.UtcNow;
+
+            var newAccessToken = _jwtGenerator.GenerateAccessToken(existingToken.User);
+            var (newRawRefreshToken, newRefreshTokenHash, newRefreshExpiresAt) = _jwtGenerator.GenerateRefreshToken();
+
+            var newRefreshTokenEntity = new RefreshToken
+            {
+                Id = Guid.NewGuid(),
+                UserId = existingToken.UserId,
+                TokenHash = newRefreshTokenHash,
+                ExpiresAt = newRefreshExpiresAt,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _userRepository.AddRefreshTokenAsync(newRefreshTokenEntity, token);
+            await _userRepository.SaveChangesAsync(token);
+
+            return (new RefreshTokenResponse(newAccessToken, newRawRefreshToken), null);
         }
 
     }

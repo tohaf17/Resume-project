@@ -5,7 +5,7 @@ using ResumeMaker.Application.DTOs.Request;
 namespace Resume_Maker.Controllers
 {
     [ApiController]
-    [Route("api/auth/telegram")]
+    [Route("api/auth")]
     public class TelegramAuthController : Controller
     {
         private readonly ITelegramAuthService _telegramAuthService;
@@ -15,7 +15,7 @@ namespace Resume_Maker.Controllers
             _telegramAuthService = telegramAuthService;
         }
 
-        [HttpPost("init")]
+        [HttpPost("telegram/init")]
         [EnableRateLimiting("ip-limit")]
         public async Task<IActionResult> Init(CancellationToken token=default)
         {
@@ -24,7 +24,7 @@ namespace Resume_Maker.Controllers
                 return Ok(result);
             
         }
-        [HttpGet("{requestId:guid}/status")]
+        [HttpGet("telegram/{requestId:guid}/status")]
         public async Task<IActionResult> GetStatus(Guid requestId,CancellationToken token=default)
         {
             var result = await _telegramAuthService.GetStatusAsync(requestId, token);
@@ -34,7 +34,7 @@ namespace Resume_Maker.Controllers
             }
             return Ok(result);
         }
-        [HttpPost("verify")]
+        [HttpPost("telegram/verify")]
         public async Task<IActionResult> VerifyAuth([FromBody] VerifyTelegramAuthRequest request,CancellationToken token=default!)
         {
             var (response, error) = await _telegramAuthService.VerifyAuthAsync(request, token);
@@ -42,6 +42,16 @@ namespace Resume_Maker.Controllers
             {
                 return NotFound(new { message = error });
             }
+            return Ok(response);
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request, CancellationToken token = default!)
+        {
+            var (response,error) = await _telegramAuthService.RefreshTokenAsync(request, token);
+            if (response is null)
+                return Unauthorized(new { message = error });
+
             return Ok(response);
         }
     }

@@ -11,6 +11,7 @@ namespace ResumeMaker.Application.Interfaces.Services
         Task<TelegramAuthResponse> InitAsync(CancellationToken token=default!);
         Task<string?> IssueCodeAsync(Guid requestId, string telegramUsername, long chatId, CancellationToken token = default);
         Task<TelegramAuthStatusResponse> GetStatusAsync(Guid requestId, CancellationToken token=default!);
-        Task<(VerifyTelegramAuthResponse? Response, string? Error)> VerifyAsync(VerifyTelegramAuthRequest request, CancellationToken token = default);
+        Task<(VerifyTelegramAuthResponse? response, string? error)> VerifyAuthAsync(VerifyTelegramAuthRequest request, CancellationToken token = default);
+        Task<(RefreshTokenResponse? Response, string? Error)> RefreshTokenAsync(RefreshTokenRequest request, CancellationToken token = default);
     }
 }

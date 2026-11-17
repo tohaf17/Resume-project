@@ -1,9 +1,10 @@
-﻿using ResumeMaker.Application.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ResumeMaker.Application.Interfaces.Repositories;
+using ResumeMaker.Domain.Entities;
+using ResumeMaker.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ResumeMaker.Domain.Entities;
-using ResumeMaker.Infrastructure.Persistence;
 
 namespace ResumeMaker.Infrastructure.Repositories
 {
@@ -26,6 +27,13 @@ namespace ResumeMaker.Infrastructure.Repositories
         public async Task<TelegramAuthRequest?> GetByIdAsync(Guid id, CancellationToken token = default)
         {
             return await _context.TelegramAuthRequests.FindAsync([id], token);
+        }
+        public async Task<RefreshToken?> GetRefreshTokenByHashAsync(string tokenHash, CancellationToken token = default)
+        {
+            return await _context.RefreshTokens
+                .Include(rt => rt.User)
+                .AsQueryable()
+                .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, token);
         }
     }
 }
