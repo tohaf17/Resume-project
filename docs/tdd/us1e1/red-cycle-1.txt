@@ -1,0 +1,12 @@
+Command:
+dotnet test ResumeMaker.Tests/ResumeMaker.Tests.csproj --no-restore
+
+Result: RED (expected failure)
+
+The test project and test were compiled, but the production implementation did not exist yet:
+
+ResumeMaker.Tests/Unit/LandingServiceTests.cs(12,27): error CS0246:
+The type or namespace name 'LandingService' could not be found
+
+This is the expected Red state for the first TDD cycle: the test describes
+the US1E1 landing-page behavior before the implementation is created.
