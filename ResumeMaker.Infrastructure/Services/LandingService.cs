@@ -11,6 +11,8 @@ public sealed class LandingService : ILandingService
 
     public Task<LandingPageResponse> GetAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var response = new LandingPageResponse(
             CtaText,
             CtaUrl,

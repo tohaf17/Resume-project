@@ -14,7 +14,7 @@ public sealed class LandingController : ControllerBase
 
     public LandingController(ILandingService landingService)
     {
-        _landingService = landingService;
+        _landingService = landingService ?? throw new ArgumentNullException(nameof(landingService));
     }
 
     [HttpGet]
