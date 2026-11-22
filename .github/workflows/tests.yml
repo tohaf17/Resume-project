@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.401
+
+      - name: Show tool versions
+        run: |
+          dotnet --version
+          dotnet --info
+
+      - name: Restore dependencies
+        run: dotnet restore "Resume Maker.slnx"
+
+      - name: Build solution
+        run: dotnet build "Resume Maker.slnx" --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test "Resume Maker.slnx" --configuration Release --no-build --logger "console;verbosity=minimal"
