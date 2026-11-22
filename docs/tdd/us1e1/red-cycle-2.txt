@@ -1,0 +1,13 @@
+Command:
+dotnet test ResumeMaker.Tests/ResumeMaker.Tests.csproj --no-restore
+
+Result: RED (expected failure)
+
+The first service cycle is green, but the second test cannot compile because
+the public API controller has not been implemented yet:
+
+ResumeMaker.Tests/Unit/LandingControllerTests.cs(19,30): error CS0246:
+The type or namespace name 'LandingController' could not be found
+
+This is the expected Red state for the second TDD cycle: US1E1 content exists,
+but it is not exposed through GET /api/landing yet.

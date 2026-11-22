@@ -3,4 +3,5 @@
   <Project Path="ResumeMaker.Application/ResumeMaker.Application.csproj" />
   <Project Path="ResumeMaker.Domain/ResumeMaker.Domain.csproj" />
   <Project Path="ResumeMaker.Infrastructure/ResumeMaker.Infrastructure.csproj" />
+  <Project Path="ResumeMaker.Tests/ResumeMaker.Tests.csproj" />
 </Solution>
