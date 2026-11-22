@@ -1,0 +1,10 @@
+Command:
+dotnet test ResumeMaker.Tests/ResumeMaker.Tests.csproj --no-restore
+
+Result: GREEN
+
+Test run for ResumeMaker.Tests.dll (.NETCoreApp,Version=v10.0)
+Passed! - Failed: 0, Passed: 1, Skipped: 0, Total: 1
+
+The first US1E1 implementation now returns the required landing-page CTA,
+templates route, and short description.
