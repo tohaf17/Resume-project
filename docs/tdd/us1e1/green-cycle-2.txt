@@ -1,0 +1,10 @@
+Command:
+dotnet test ResumeMaker.Tests/ResumeMaker.Tests.csproj --no-restore
+
+Result: GREEN
+
+Test run for ResumeMaker.Tests.dll (.NETCoreApp,Version=v10.0)
+Passed! - Failed: 0, Passed: 2, Skipped: 0, Total: 2
+
+The second implementation now exposes the landing response through the
+anonymous GET /api/landing endpoint and registers the service in DI.
