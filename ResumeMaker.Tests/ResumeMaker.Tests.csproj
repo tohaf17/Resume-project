@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Resume Maker.API\ResumeMaker.API.csproj" />
     <ProjectReference Include="..\ResumeMaker.Application\ResumeMaker.Application.csproj" />
     <ProjectReference Include="..\ResumeMaker.Infrastructure\ResumeMaker.Infrastructure.csproj" />
   </ItemGroup>
