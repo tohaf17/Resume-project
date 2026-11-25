@@ -30,6 +30,12 @@ namespace ResumeMaker.Infrastructure
             services.AddScoped<ITelegramAuthService, TelegramAuthService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddHostedService<TelegramBotWorker>();
+            //added by member 1
+            services.AddScoped<ILandingService, LandingService>();
+            services.AddScoped<IStaticPageService, StaticPageService>();
+            services.AddScoped<ITemplateService, TemplateService>();
+            services.AddScoped<IRegistrationPromptAnalyticsService, RegistrationPromptAnalyticsService>();
+            //.
             return services;
         }
     }

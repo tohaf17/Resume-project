@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//added
+using Microsoft.EntityFrameworkCore;
 using ResumeMaker.Domain.Entities;
 using ResumeMaker.Infrastructure.Persistence.Configurations;
 using System;
@@ -15,6 +16,12 @@ namespace ResumeMaker.Infrastructure.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<TelegramAuthRequest> TelegramAuthRequests { get; set; }
+
+        //added by member 1
+        public DbSet<StaticPage> StaticPages { get; set; }
+        public DbSet<ResumeTemplate> ResumeTemplates { get; set; }
+        public DbSet<RegistrationPromptEvent> RegistrationPromptEvents { get; set; }
+        //.
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

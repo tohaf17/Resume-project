@@ -43,6 +43,18 @@ builder.Services
     });
 
 builder.Services.AddAuthorization();
+
+//added by member 1
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PublicApiPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 //конфігурація Rate Limiter
 builder.Services.AddRateLimiter(options =>
 {
@@ -98,6 +110,7 @@ using (var scope = app.Services.CreateScope())
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+app.UseCors("PublicApiPolicy");
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
