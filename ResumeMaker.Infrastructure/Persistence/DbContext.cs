@@ -15,6 +15,8 @@ namespace ResumeMaker.Infrastructure.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<TelegramAuthRequest> TelegramAuthRequests { get; set; }
+        public DbSet<ResumeTemplate> ResumeTemplates { get; set; }
+        public DbSet<GuestResumeDraft> GuestResumeDrafts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

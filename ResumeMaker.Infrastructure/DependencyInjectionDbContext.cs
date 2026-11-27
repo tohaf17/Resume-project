@@ -29,6 +29,7 @@ namespace ResumeMaker.Infrastructure
             services.AddScoped<IAdminAuthService, AdminAuthService>();
             services.AddScoped<ITelegramAuthService, TelegramAuthService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddScoped<IGuestResumeService, GuestResumeService>();
             services.AddHostedService<TelegramBotWorker>();
             return services;
         }

@@ -92,6 +92,28 @@ using (var scope = app.Services.CreateScope())
         });
         await dbContext.SaveChangesAsync();
     }
+    if (!await dbContext.ResumeTemplates.AnyAsync())
+    {
+        dbContext.ResumeTemplates.AddRange(
+            new ResumeTemplate
+            {
+                Id = Guid.Parse("7c9c7b90-1111-4111-8111-111111111111"),
+                Name = "Basic Free Template",
+                IsPremium = false,
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow
+            },
+            new ResumeTemplate
+            {
+                Id = Guid.Parse("7c9c7b90-2222-4222-8222-222222222222"),
+                Name = "Executive Premium Template",
+                IsPremium = true,
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow
+            }
+        );
+        await dbContext.SaveChangesAsync();
+    }
 }
 
 

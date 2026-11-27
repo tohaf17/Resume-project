@@ -22,6 +22,40 @@ namespace ResumeMaker.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ResumeMaker.Domain.Entities.GuestResumeDraft", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("GuestSessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TemplateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuestSessionId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("GuestResumeDrafts", (string)null);
+                });
+
             modelBuilder.Entity("ResumeMaker.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -53,6 +87,31 @@ namespace ResumeMaker.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ResumeMaker.Domain.Entities.ResumeTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPremium")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResumeTemplates", (string)null);
                 });
 
             modelBuilder.Entity("ResumeMaker.Domain.Entities.TelegramAuthRequest", b =>
@@ -99,12 +158,12 @@ namespace ResumeMaker.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
                         .HasMaxLength(256)
@@ -131,15 +190,26 @@ namespace ResumeMaker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TelegramUserId")
-                        .IsUnique();
-
-
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
+                    b.HasIndex("TelegramUserId")
+                        .IsUnique()
+                        .HasFilter("[TelegramUserId] IS NOT NULL");
+
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("ResumeMaker.Domain.Entities.GuestResumeDraft", b =>
+                {
+                    b.HasOne("ResumeMaker.Domain.Entities.ResumeTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("ResumeMaker.Domain.Entities.RefreshToken", b =>
